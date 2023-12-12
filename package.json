@@ -1,0 +1,31 @@
+{
+  "name": "@lapala/template",
+  "version": "0.1.0",
+  "description": "Library serving as the foundation for the development of all Lapala services written in TypeScript.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "node ./node_modules/eslint/bin/eslint.js \"src/**/*.ts\" --quiet",
+    "test": "echo \"Warning: no test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lapala/template.git"
+  },
+  "keywords": [
+    "lapala",
+    "framework"
+  ],
+  "author": "Gilles Coudert <gilles@lapala.io> (https://lapala.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lapala/template/issues"
+  },
+  "homepage": "https://github.com/lapala/template#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "eslint": "^8.55.0",
+    "typescript": "^5.3.3"
+  }
+}

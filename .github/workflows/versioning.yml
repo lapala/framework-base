@@ -1,0 +1,53 @@
+name: Update main version
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+  default:
+    name: Update main version
+
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged
+
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v2
+        with:
+          token: ${{ Secrets.LAPALA_TECH_PAT }}
+          ref: "main"
+
+      - name: Configure git
+        run: |
+          git config --global user.name "lapala"
+          git config --global user.email "tech@lapala.io"
+
+      - name: Increment version on main
+        id: increment_version
+        run: |
+          echo Merged branch name : $BRANCH_NAME
+          if [[ $BRANCH_NAME == develop* ]]
+          then
+            echo New feature detected.
+            NEW_VERSION=$(npm version minor)
+          else
+            if [[ $BRANCH_NAME == upgrade/* ]]
+            then
+              echo New major version detected.
+              NEW_VERSION=$(npm version major)
+            else
+              echo New hotfix / refactor detected.
+              NEW_VERSION=$(npm version patch)
+            fi
+          fi
+          echo "::set-output name=new_version::$NEW_VERSION"
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+
+      - name: Push
+        run: git push && git push --tags

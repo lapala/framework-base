@@ -1,0 +1,213 @@
+{
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true,
+            "source.organizeImports": false
+        }
+    },
+    "editor.formatOnSave": true,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    //──────────────────────
+    // * BETTER COMMMENTS * 
+    //──────────────────────
+    "better-comments.tags": [
+        {
+            "tag": "%",
+            "color": "#FF00FF",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "!",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "?",
+            "color": "#3498DB",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "//",
+            "color": "#474747",
+            "strikethrough": true,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "todo",
+            "color": "#FF8C00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": "*",
+            "color": "#98C379",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": false
+        },
+        {
+            "tag": ">",
+            "color": "#21ada9",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "#",
+            "color": "#8d61d4",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        }
+    ],
+    //─────────────────
+    // * COMMENT BOX * 
+    //─────────────────
+    "commentBox.styles": {
+        "algorithmStyle": {
+            "capitalize": false,
+            "textAlignment": "left",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//>",
+            "commentEndToken": "─<",
+            "leftEdgeToken": "//> ",
+            "rightEdgeToken": " <",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": "─<",
+            "bottomLeftToken": "//>"
+        },
+        "headerStyle": {
+            "capitalize": true,
+            "textAlignment": "left",
+            "ignoreInnerIndentation": true,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//",
+            "commentEndToken": "───",
+            "leftEdgeToken": "// * ",
+            "rightEdgeToken": " * ",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": "───",
+            "bottomLeftToken": "//"
+        },
+        "algorithmHeaderStyle": {
+            "capitalize": true,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": true,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//>",
+            "commentEndToken": "",
+            "leftEdgeToken": "//> ─── ",
+            "rightEdgeToken": " ───",
+            "topEdgeToken": " ",
+            "bottomEdgeToken": " ",
+            "topRightToken": "",
+            "bottomLeftToken": "//>"
+        },
+        "algorithmCommentStyle": {
+            "capitalize": false,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//>",
+            "commentEndToken": "",
+            "leftEdgeToken": "//> > fr: ",
+            "rightEdgeToken": "",
+            "topEdgeToken": " ",
+            "bottomEdgeToken": " ",
+            "topRightToken": "",
+            "bottomLeftToken": "//>",
+        },
+        "algorithmCaseStyle": {
+            "capitalize": false,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//> ?! ",
+            "commentEndToken": " ?!",
+            "leftEdgeToken": "//> ?! fr: ",
+            "rightEdgeToken": " ?!",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": " ?!",
+            "bottomLeftToken": "//> ?! ",
+        },
+        "algorithmLoopStyle": {
+            "capitalize": false,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 0,
+            "commentStartToken": "//> ↓↑ ",
+            "commentEndToken": " ↓↑",
+            "leftEdgeToken": "//> ↓↑ fr: ",
+            "rightEdgeToken": " ↓↑",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": " ↓↑",
+            "bottomLeftToken": "//> ↓↑ ",
+        },
+        "regionStartStyle": {
+            "capitalize": true,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 100,
+            "commentStartToken": "//#─",
+            "commentEndToken": "─#",
+            "leftEdgeToken": "//#region ",
+            "rightEdgeToken": " #",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": "─#",
+            "bottomLeftToken": "//#"
+        },
+        "regionEndStyle": {
+            "capitalize": true,
+            "textAlignment": "center",
+            "ignoreInnerIndentation": false,
+            "ignoreOuterIndentation": false,
+            "boxWidth": 100,
+            "commentStartToken": "//#─",
+            "commentEndToken": "─#",
+            "leftEdgeToken": "//#endregion ",
+            "rightEdgeToken": " #",
+            "topEdgeToken": "─",
+            "bottomEdgeToken": "─",
+            "topRightToken": "─#",
+            "bottomLeftToken": "//#─"
+        },
+    },
+}
