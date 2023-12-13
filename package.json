@@ -1,8 +1,11 @@
 {
   "name": "@lapala/framework-base",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Library serving as the foundation for the development of all Lapala services written in TypeScript.",
   "main": "index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "node ./node_modules/eslint/bin/eslint.js \"src/**/*.ts\" --quiet",
@@ -27,5 +30,8 @@
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
   }
 }
