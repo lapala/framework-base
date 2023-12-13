@@ -1,8 +1,11 @@
 {
-  "name": "@lapala/template",
-  "version": "0.1.0",
+  "name": "@lapala/framework-base",
+  "version": "0.0.0",
   "description": "Library serving as the foundation for the development of all Lapala services written in TypeScript.",
   "main": "index.js",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "node ./node_modules/eslint/bin/eslint.js \"src/**/*.ts\" --quiet",
@@ -10,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lapala/template.git"
+    "url": "git+https://github.com/lapala/framework-base.git"
   },
   "keywords": [
     "lapala",
@@ -19,13 +22,16 @@
   "author": "Gilles Coudert <gilles@lapala.io> (https://lapala.io)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lapala/template/issues"
+    "url": "https://github.com/lapala/framework-base/issues"
   },
-  "homepage": "https://github.com/lapala/template#readme",
+  "homepage": "https://github.com/lapala/framework-base#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
   }
 }

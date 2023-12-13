@@ -51,3 +51,16 @@ jobs:
 
       - name: Push
         run: git push && git push --tags
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: npm run build
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.TECH_NPM_TOKEN }}
