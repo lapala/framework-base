@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Library serving as the foundation for the development of all Lapala services written in TypeScript.",
   "private": false,
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/"
   ],
