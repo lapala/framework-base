@@ -1,6 +1,6 @@
 {
   "name": "@lapala/framework-base",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Library serving as the foundation for the development of all Lapala services written in TypeScript.",
   "main": "index.js",
   "files": [
