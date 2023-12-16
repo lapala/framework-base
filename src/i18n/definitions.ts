@@ -86,16 +86,16 @@ export const LocalizableStringSet: z.ZodSchema<LocalizableStringSet> = z.lazy(()
 //> en: user's culture as soon as it is known.                                       <
 //>──────────────────────────────────────────────────────────────────────────────────<
 
-//──────────────────
-// * BASE MESSAGE * 
-//──────────────────
+export enum MessageType {
+    AccessDenied = 'AccessDenied',
+    ProcessError = 'ProcessError',
+    TechnicalIssue = 'TechnicalIssue',
+    UnknownResource = 'UnknownResource',
+    Warn = 'Warn',
+}
 
 export const Message = z.object({
-    //>                                                                                         
-    //> > fr: Chaque message doit être typé mais la liste des types est à fixer par les enfants.
-    //> > en: Each message must be typed but the list of types is to be set by the children.
-    //>                                                                                         
-    type: z.string(),
+    type: z.nativeEnum(MessageType),
     code: z.string(),
     parameters: z.record(z.string()).optional(),
     issuer: z.string().optional(),
@@ -107,35 +107,6 @@ export const Message = z.object({
     localizedstring: LocalizedString.optional(),
 });
 export type Message = z.infer<typeof Message>;
-
-//──────────────────────
-// * WARNING MESSAGES * 
-//──────────────────────
-
-export enum WarningType {
-    Warn = 'WARN'
-}
-
-export const WarningMessage = Message.extend({
-    type: z.nativeEnum(WarningType),
-});
-export type WarningMessage = z.infer<typeof WarningMessage>;
-
-//────────────────────
-// * ERROR MESSAGES * 
-//────────────────────
-
-export enum ErrorType {
-    AccessDenied = 'ACCESS_DENIED',
-    ProcessError = 'PROCESS_ERROR',
-    UnknownResource = 'UNKNOWN_RESOURCE',
-    TechnicalIssue = 'TECHNICAL_ISSUE'
-}
-
-export const ErrorMessage = Message.extend({
-    type: z.nativeEnum(ErrorType),
-});
-export type ErrorMessage = z.infer<typeof ErrorMessage>;
 
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 //#endregion                                    CODED MESSAGES                                     #
