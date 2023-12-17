@@ -79,12 +79,14 @@ export const LocalizableStringSet: z.ZodSchema<LocalizableStringSet> = z.lazy(()
 //#region                                      CODED MESSAGES                                      #
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 
-//>──────────────────────────────────────────────────────────────────────────────────<
-//> fr: Les messages transitent sous forme de code, avec la traduction correspondant <
-//> fr: à la culture de l'utilisateur dès qu'elle est connue.                        <
-//> en: Messages are transmitted as code, with the translation corresponding to the  <
-//> en: user's culture as soon as it is known.                                       <
-//>──────────────────────────────────────────────────────────────────────────────────<
+//>──────────────────────────────────────────────────────────────────────────────<
+//> fr:                                                                          <
+//> Les messages transitent sous forme de code, avec la traduction correspondant <
+//> à la culture de l'utilisateur dès qu'elle est connue.                        <
+//> en:                                                                          <
+//> Messages are transmitted as code, with the translation corresponding to the  <
+//> user's culture as soon as it is known.                                       <
+//>──────────────────────────────────────────────────────────────────────────────<
 
 export enum MessageType {
     AccessDenied = 'AccessDenied',

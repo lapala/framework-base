@@ -187,7 +187,7 @@ export abstract class Result<S> {
     //> fr: Les fonctions d'exploration permettent d'observer un résultat sans le changer. <
     //>────────────────────────────────────────────────────────────────────────────────────<
 
-    public extend(f: (result: Result<S>) => void): Result<S> {
+    public observe(f: (result: Result<S>) => void): Result<S> {
         f(this);
         return this;
     }
@@ -202,9 +202,9 @@ export abstract class Result<S> {
 
     abstract mapSuccess<S2>(onSuccess: (value: S) => Success<S2>): Result<S2>;
 
-    abstract mapFailure(onFailure: (result: Failure<S>) => Failure): Result<S>;
+    abstract mapFailure(onFailure: (errors: Message[]) => Failure): Result<S>;
 
-    abstract mapBoth<S2>(onFailure: (result: Failure<S>) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2>;
+    abstract mapBoth<S2>(onFailure: (errors: Message[]) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2>;
 
     //─────────────────────────────
     // * FONCTIONS DE TYPE CHAIN * 
@@ -216,9 +216,9 @@ export abstract class Result<S> {
 
     abstract chainSuccess<S2>(next: (value: S) => Result<S2>): Result<S2>;
 
-    abstract chainFailure<S2>(next: (value: Failure<S>) => Result<S2>): Result<S | S2>;
+    abstract chainFailure<S2>(next: (errors: Message[]) => Result<S2>): Result<S | S2>;
 
-    abstract chainBoth<S2, S3>(onFailure: (result: Failure<S>) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3>;
+    abstract chainBoth<S2, S3>(onFailure: (errors: Message[]) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3>;
 
     //──────────────────────
     // * AUTRES FONCTIONS * 
@@ -267,11 +267,11 @@ export class Success<S> extends Result<S> {
         return onSuccess(this.value).addWarnings(this.warnings);
     }
 
-    mapFailure(onFailure: (result: Failure) => Failure): Result<S> {
+    mapFailure(onFailure: (errors: Message[]) => Failure): Result<S> {
         return this as Result<S>;
     }
 
-    mapBoth<S2>(onFailure: (result: Failure) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2> {
+    mapBoth<S2>(onFailure: (errors: Message[]) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2> {
         return onSuccess(this.value).addWarnings(this.warnings);
     }
 
@@ -279,11 +279,11 @@ export class Success<S> extends Result<S> {
         return next(this.value).addWarnings(this.warnings);
     }
 
-    chainFailure<S2>(next: (result: Failure) => Result<S2>): Result<S | S2> {
+    chainFailure<S2>(next: (errors: Message[]) => Result<S2>): Result<S | S2> {
         return this;
     }
 
-    chainBoth<S2, S3>(onFailure: (result: Failure) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3> {
+    chainBoth<S2, S3>(onFailure: (errors: Message[]) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3> {
         return onSuccess(this.value).addWarnings(this.warnings);
     }
 
@@ -315,7 +315,12 @@ export class Failure<S = never> extends Result<S> {
     }
 
     static single(code: string, parameters?: Record<string, string>, issuer?: string, type: MessageType = MessageType.ProcessError): Failure {
-        return new Failure([{ code, parameters, issuer, type }]);
+        return new Failure([{
+            code,
+            parameters,
+            issuer,
+            type,
+        }]);
     }
 
     isFailure(): boolean {
@@ -331,12 +336,12 @@ export class Failure<S = never> extends Result<S> {
         return this as any;
     }
 
-    mapFailure(onFailure: (result: Failure<S>) => Failure): Result<S> {
-        return onFailure(this).addWarnings(this.warnings);
+    mapFailure(onFailure: (errors: Message[]) => Failure): Result<S> {
+        return onFailure(this.errors).addWarnings(this.warnings);
     }
 
-    mapBoth<S2>(onFailure: (result: Failure<S>) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2> {
-        return onFailure(this).addWarnings(this.warnings);
+    mapBoth<S2>(onFailure: (errors: Message[]) => Failure, onSuccess: (value: S) => Success<S2>): Result<S2> {
+        return onFailure(this.errors).addWarnings(this.warnings);
     }
 
     chainSuccess<S2>(next: (value: S) => Result<S2>): Result<S2> {
@@ -344,12 +349,12 @@ export class Failure<S = never> extends Result<S> {
         return this as any;
     }
 
-    chainFailure<S2>(next: (result: Failure<S>) => Result<S2>): Result<S | S2> {
-        return next(this).addWarnings(this.warnings);
+    chainFailure<S2>(next: (errors: Message[]) => Result<S2>): Result<S | S2> {
+        return next(this.errors).addWarnings(this.warnings);
     }
 
-    chainBoth<S2, S3>(onFailure: (result: Failure<S>) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3> {
-        return onFailure(this).addWarnings(this.warnings);
+    chainBoth<S2, S3>(onFailure: (errors: Message[]) => Result<S2>, onSuccess: (value: S) => Result<S3>): Result<S2 | S3> {
+        return onFailure(this.errors).addWarnings(this.warnings);
     }
 
     downgradeErrorsToWarnings(withErrorFlag?: boolean): Success<S | boolean> {
