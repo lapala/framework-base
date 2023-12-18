@@ -105,7 +105,7 @@ export const Message = z.object({
     //> > fr: À utiliser lorsqu'il y a un décalage entre la mise à disposition du dictionnaire et la connaisance de la culture de l'utilisateur.
     //> > en: To be used when there is a gap between the availability of the dictionary and the knowledge of the user's culture.
     //>                                                                                                                                         
-    localizableStringSet: LocalizableStringSet.optional(),
+    localizableString: LocalizableString.optional(),
     localizedstring: LocalizedString.optional(),
 });
 export type Message = z.infer<typeof Message>;
