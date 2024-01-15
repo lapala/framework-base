@@ -168,12 +168,17 @@ class ResultAsyncImpl<S> implements ResultAsync<S> {
         nextSuccess: (value: S) => PromiseLike<Result<S3>>,
     ): ResultAsync<S2 | S3> {
         return ResultAsync<S2 | S3>(async (helpers) => {
+            let inputPromiseIsSuccessful = false;
             try {
                 const success = await this.runPromise(helpers);
+                inputPromiseIsSuccessful = true;
                 return await helpers.fromResultPromise(nextSuccess(success.value).then((result) => result.addWarnings(success.warnings)));
             } catch (e) {
                 // NOTE e must be a Failure here.
                 const failure = e as Failure;
+                if (inputPromiseIsSuccessful) {
+                    return helpers.liftResult(failure);
+                }
                 return helpers.fromResultPromise(nextFailure(failure.errors).then((success) => success.addWarnings(failure.warnings)));
             }
         });
@@ -190,7 +195,7 @@ interface ResultAsyncTypeRef {
     liftSuccess<S>(value: S): ResultAsync<S>;
     liftFailure(code: string, parameters?: Record<string, string>, issuer?: string, type?: MessageType): ResultAsync<never>;
     check<S>(condition: boolean, success: S, failure: Failure): ResultAsync<S>;
-    if<S1, S2>(condition: boolean, ifResult: Result<S1>, elseResult: Result<S2>): ResultAsync<S1 | S2>;
+    if<S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult: ResultAsync<S2>): ResultAsync<S1 | S2>;
     fromResultPromise<S>(promise: () => PromiseLike<Result<S>>): ResultAsync<S>;
     fromPromise<S>(promise: () => PromiseLike<S>, failure: (reason: unknown) => Failure): ResultAsync<S>;
     allMustSuccess<S>(list: ResultAsync<S>[]): ResultAsync<S[]>;
@@ -208,7 +213,7 @@ export const ResultAsync: ResultAsyncTypeRef = Object.assign(
         liftSuccess: <S>(value: S): ResultAsync<S> => ResultAsync(({ liftResult }) => liftResult(new Success(value))),
         liftFailure: (code: string, parameters?: Record<string, string>, issuer?: string, type?: MessageType): ResultAsync<never> => ResultAsync(({ liftFailure }) => liftFailure(code, parameters, issuer, type)),
         check: <S>(condition: boolean, success: S, failure: Failure): ResultAsync<S> => ResultAsync.liftResult(condition ? new Success(success) : failure),
-        if: <S1, S2>(condition: boolean, ifResult: Result<S1>, elseResult: Result<S2>): ResultAsync<S1 | S2> => condition ? ResultAsync.liftResult(ifResult) : ResultAsync.liftResult(elseResult),
+        if: <S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult: ResultAsync<S2>): ResultAsync<S1 | S2> => condition ? ifResult : elseResult,
         fromResultPromise: <S>(promise: () => PromiseLike<Result<S>>): ResultAsync<S> => ResultAsync(({ fromResultPromise }) => fromResultPromise(promise())),
         fromPromise: <S>(promise: () => PromiseLike<S>, failure: (reason: unknown) => Failure): ResultAsync<S> => ResultAsync(({ fromPromise }) => fromPromise(promise(), failure)),
         allMustSuccess: <S>(list: ResultAsync<S>[]): ResultAsync<S[]> => ResultAsync.fromResultPromise(() => Promise.all(list).then(Result.sequence)),
