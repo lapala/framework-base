@@ -71,6 +71,23 @@ export function createLocalizableStringSet<T extends StringSet>(stringSet: z.Zod
 export type LocalizableStringSet = ReturnType<typeof createLocalizableStringSet>;
 export const LocalizableStringSet: z.ZodSchema<LocalizableStringSet> = z.lazy(() => LocalizableStringSet);
 
+//────────────────────────
+// * COMMON STRING SETS * 
+//────────────────────────
+
+export const SimpleStringSet = z.object({
+    name: z.string(),
+});
+export const SimpleLocalizableStringSet = createLocalizableStringSet(SimpleStringSet);
+export type SimpleLocalizableStringSet = z.infer<typeof SimpleLocalizableStringSet>;
+
+export const StandardStringSet = z.object({
+    name: z.string(),
+    description: z.string(),
+});
+export const StandardLocalizableStringSet = createLocalizableStringSet(StandardStringSet);
+export type StandardLocalizableStringSet = z.infer<typeof StandardLocalizableStringSet>;
+
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 //#endregion                                   I18N COMMON ITEMS                                   #
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
@@ -106,7 +123,7 @@ export const Message = z.object({
     //> > en: To be used when there is a gap between the availability of the dictionary and the knowledge of the user's culture.
     //>                                                                                                                                         
     localizableString: LocalizableString.optional(),
-    localizedstring: LocalizedString.optional(),
+    localizedString: LocalizedString.optional(),
 });
 export type Message = z.infer<typeof Message>;
 
