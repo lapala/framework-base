@@ -68,33 +68,46 @@ export function createLocalizableStringSet<T extends StringSet>(stringSet: T) {
     return z.record(Culture, stringSet);
 }
 
-export type LocalizableStringSet = z.infer<ReturnType<typeof createLocalizableStringSet>>;
-export const LocalizableStringSet: z.ZodSchema<LocalizableStringSet> = z.lazy(() => LocalizableStringSet);
-
 //────────────────────────
 // * COMMON STRING SETS * 
 //────────────────────────
 
+// * fr: uniquement un nom
+
 export const SimpleStringSet = z.object({
     name: z.string(),
 });
+export type SimpleStringSet = z.infer<typeof SimpleStringSet>;
+
 export const SimpleLocalizableStringSet = createLocalizableStringSet(SimpleStringSet);
 export type SimpleLocalizableStringSet = z.infer<typeof SimpleLocalizableStringSet>;
 
+// * fr: version extensible
+
 export const ExtensibleSimpleStringSet = SimpleStringSet.catchall(z.string());
+export type ExtensibleSimpleStringSet = z.infer<typeof ExtensibleSimpleStringSet>;
+
 export const ExtensibleSimpleLocalizableStringSet = createLocalizableStringSet(ExtensibleSimpleStringSet);
-export type ExtensibleSimpleLocalizableStringSet = z.infer<typeof ExtensibleSimpleLocalizableStringSet>;
+export type ExtensibleSimpleLocalizableStringSet = Record<Culture, ExtensibleSimpleStringSet>;
+
+// * fr: nom et description
 
 export const StandardStringSet = z.object({
     name: z.string(),
     description: z.string(),
 });
+export type StandardStringSet = z.infer<typeof StandardStringSet>;
+
 export const StandardLocalizableStringSet = createLocalizableStringSet(StandardStringSet);
 export type StandardLocalizableStringSet = z.infer<typeof StandardLocalizableStringSet>;
 
+// * fr: version extensible
+
 export const ExtensibleStandardStringSet = StandardStringSet.catchall(z.string());
+export type ExtensibleStandardStringSet = z.infer<typeof ExtensibleStandardStringSet>;
+
 export const ExtensibleStandardLocalizableStringSet = createLocalizableStringSet(ExtensibleStandardStringSet);
-export type ExtensibleStandardLocalizableStringSet = z.infer<typeof ExtensibleStandardLocalizableStringSet>;
+export type ExtensibleStandardLocalizableStringSet = Record<Culture, ExtensibleStandardStringSet>;
 
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 //#endregion                                   I18N COMMON ITEMS                                   #
