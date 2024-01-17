@@ -51,11 +51,11 @@ export type LocalizedStringSet = z.infer<typeof LocalizedStringSet>;
 // * LOCALIZABLE STRING SET *
 //────────────────────────────
 
-export type StringSet = { [key: string]: z.ZodString };
+export type StringSet = z.ZodObject<Record<string, z.ZodString>>;
 
 //>
-//> > fr: Un ensemble de chaînes localisables est un ensemble de chaînes localisées représentant la même chaîne dans différentes cultures.
-//> > en: A set of localizable strings is a set of localized strings representing the same string in different cultures.
+//> > fr: Un ensemble de chaînes localisables est un ensemble de chaînes localisées représentant les mêmes chaînes dans différentes cultures.
+//> > en: A set of localizable strings is a set of localized strings representing the same strings in different cultures.
 //>
 
 /**
@@ -64,11 +64,11 @@ export type StringSet = { [key: string]: z.ZodString };
  * @param stringSet 
  * @returns 
  */
-export function createLocalizableStringSet<T extends StringSet>(stringSet: z.ZodObject<T>) {
+export function createLocalizableStringSet<T extends StringSet>(stringSet: T) {
     return z.record(Culture, stringSet);
 }
 
-export type LocalizableStringSet = ReturnType<typeof createLocalizableStringSet>;
+export type LocalizableStringSet = z.infer<ReturnType<typeof createLocalizableStringSet>>;
 export const LocalizableStringSet: z.ZodSchema<LocalizableStringSet> = z.lazy(() => LocalizableStringSet);
 
 //────────────────────────
@@ -81,12 +81,20 @@ export const SimpleStringSet = z.object({
 export const SimpleLocalizableStringSet = createLocalizableStringSet(SimpleStringSet);
 export type SimpleLocalizableStringSet = z.infer<typeof SimpleLocalizableStringSet>;
 
+export const ExtensibleSimpleStringSet = SimpleStringSet.catchall(z.string());
+export const ExtensibleSimpleLocalizableStringSet = createLocalizableStringSet(ExtensibleSimpleStringSet);
+export type ExtensibleSimpleLocalizableStringSet = z.infer<typeof ExtensibleSimpleLocalizableStringSet>;
+
 export const StandardStringSet = z.object({
     name: z.string(),
     description: z.string(),
 });
 export const StandardLocalizableStringSet = createLocalizableStringSet(StandardStringSet);
 export type StandardLocalizableStringSet = z.infer<typeof StandardLocalizableStringSet>;
+
+export const ExtensibleStandardStringSet = StandardStringSet.catchall(z.string());
+export const ExtensibleStandardLocalizableStringSet = createLocalizableStringSet(ExtensibleStandardStringSet);
+export type ExtensibleStandardLocalizableStringSet = z.infer<typeof ExtensibleStandardLocalizableStringSet>;
 
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 //#endregion                                   I18N COMMON ITEMS                                   #
