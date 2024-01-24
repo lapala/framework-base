@@ -195,7 +195,8 @@ interface ResultAsyncTypeRef {
     liftSuccess<S>(value: S): ResultAsync<S>;
     liftFailure(code: string, parameters?: Record<string, string>, issuer?: string, type?: MessageType): ResultAsync<never>;
     check<S>(condition: boolean, success: S, failure: Failure): ResultAsync<S>;
-    if<S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult?: ResultAsync<S2>): ResultAsync<S1 | S2 | false>;
+    if<S>(condition: boolean, ifResult: ResultAsync<S>): ResultAsync<S | false>;
+    ifElse<S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult: ResultAsync<S2>): ResultAsync<S1 | S2>;
     fromResultPromise<S>(promise: () => PromiseLike<Result<S>>): ResultAsync<S>;
     fromPromise<S>(promise: () => PromiseLike<S>, failure: (reason: unknown) => Failure): ResultAsync<S>;
     allMustSuccess<S>(list: ResultAsync<S>[]): ResultAsync<S[]>;
@@ -213,7 +214,8 @@ export const ResultAsync: ResultAsyncTypeRef = Object.assign(
         liftSuccess: <S>(value: S): ResultAsync<S> => ResultAsync(({ liftResult }) => liftResult(new Success(value))),
         liftFailure: (code: string, parameters?: Record<string, string>, issuer?: string, type?: MessageType): ResultAsync<never> => ResultAsync(({ liftFailure }) => liftFailure(code, parameters, issuer, type)),
         check: <S>(condition: boolean, success: S, failure: Failure): ResultAsync<S> => ResultAsync.liftResult(condition ? new Success(success) : failure),
-        if: <S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult?: ResultAsync<S2>): ResultAsync<S1 | S2 | false> => condition ? ifResult : (elseResult ?? ResultAsync.liftSuccess(false)),
+        if: <S>(condition: boolean, ifResult: ResultAsync<S>): ResultAsync<S | false> => condition ? ifResult : ResultAsync.liftSuccess(false),
+        ifElse: <S1, S2>(condition: boolean, ifResult: ResultAsync<S1>, elseResult: ResultAsync<S2>): ResultAsync<S1 | S2> => condition ? ifResult : elseResult,
         fromResultPromise: <S>(promise: () => PromiseLike<Result<S>>): ResultAsync<S> => ResultAsync(({ fromResultPromise }) => fromResultPromise(promise())),
         fromPromise: <S>(promise: () => PromiseLike<S>, failure: (reason: unknown) => Failure): ResultAsync<S> => ResultAsync(({ fromPromise }) => fromPromise(promise(), failure)),
         allMustSuccess: <S>(list: ResultAsync<S>[]): ResultAsync<S[]> => ResultAsync.fromResultPromise(() => Promise.all(list).then(Result.sequence)),
