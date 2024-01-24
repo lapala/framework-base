@@ -51,7 +51,8 @@ export type LocalizedStringSet = z.infer<typeof LocalizedStringSet>;
 // * LOCALIZABLE STRING SET *
 //────────────────────────────
 
-export type StringSet = z.ZodObject<Record<string, z.ZodString>>;
+export type StringSetDefinition = z.ZodObject<Record<string, z.ZodString>>;
+export type StringSet = z.infer<StringSetDefinition>;
 
 //>
 //> > fr: Un ensemble de chaînes localisables est un ensemble de chaînes localisées représentant les mêmes chaînes dans différentes cultures.
@@ -64,7 +65,7 @@ export type StringSet = z.ZodObject<Record<string, z.ZodString>>;
  * @param stringSet 
  * @returns 
  */
-export function createLocalizableStringSet<T extends StringSet>(stringSet: T) {
+export function createLocalizableStringSet<T extends StringSetDefinition>(stringSet: T) {
     return z.record(Culture, stringSet);
 }
 
