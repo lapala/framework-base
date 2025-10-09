@@ -25,6 +25,11 @@ jobs:
         with:
           ref: "main"
 
+      - name: Configure git
+        run: |
+          git config --global user.name "lapala"
+          git config --global user.email "tech@lapala.io"
+          
       - name: Increment version on main
         id: increment_version
         run: |
