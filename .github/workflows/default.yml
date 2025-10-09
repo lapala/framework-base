@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cache modules
-        uses: actions/cache@v1
+        uses: actions/cache@v4
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}

@@ -1,0 +1,1 @@
+// see RawData / DataSchema / RichData diagram.
