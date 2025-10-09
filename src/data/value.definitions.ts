@@ -37,8 +37,7 @@ export type LapalaPropertyValues = z.infer<typeof LapalaPropertyValues>;
 
 // % fr: Toutes les données sont représentées par des objets dont les propriétés sont des tableaux.
 export type LapalaObject = { [key: string]: (LapalaObject[] | LapalaPropertyValues) };
-export const LapalaObject: z.ZodSchema<LapalaObject> = z.lazy(() => z.record(LapalaObject.array().or(LapalaPropertyValues)));
-
+export const LapalaObject: z.ZodSchema<LapalaObject> = z.lazy(() => z.record(z.string(), LapalaObject.array().or(LapalaPropertyValues)));
 //#────────────────────────────────────────────────────────────────────────────────────────────────#
 //#endregion                                   VALEURS CONCRÈTES                                   #
 //#────────────────────────────────────────────────────────────────────────────────────────────────#

@@ -44,7 +44,7 @@ export type LocalizableString = z.infer<typeof LocalizableString>;
 //> > en: A set of localized strings is a set of strings associated with a culture.
 //>
 
-export const LocalizedStringSet = z.tuple([Culture, z.record(z.string())]);
+export const LocalizedStringSet = z.tuple([Culture, z.record(z.string(), z.string())]);
 export type LocalizedStringSet = z.infer<typeof LocalizedStringSet>;
 
 //────────────────────────────
@@ -138,7 +138,7 @@ export enum MessageType {
 export const Message = z.object({
     type: z.nativeEnum(MessageType),
     code: z.string(),
-    parameters: z.record(z.string()).optional(),
+    parameters: z.record(z.string(), z.string()).optional(),
     issuer: z.string().optional(),
     //>                                                                                                                                         
     //> > fr: À utiliser lorsqu'il y a un décalage entre la mise à disposition du dictionnaire et la connaisance de la culture de l'utilisateur.

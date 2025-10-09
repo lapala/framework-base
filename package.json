@@ -28,12 +28,12 @@
   },
   "homepage": "https://github.com/lapala/framework-base#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
-    "eslint": "^8.55.0",
-    "typescript": "^5.3.3"
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "eslint": "^9.37.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "zod": "^3.22.4"
+    "zod": "^4.1.12"
   }
 }
