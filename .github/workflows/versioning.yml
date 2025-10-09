@@ -16,20 +16,20 @@ jobs:
     if: github.event.pull_request.merged
 
     permissions:
-      contents: write
       id-token: write
 
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
         with:
+          token: ${{ Secrets.LAPALA_TECH_PAT }}
           ref: "main"
 
       - name: Configure git
         run: |
           git config --global user.name "lapala"
           git config --global user.email "tech@lapala.io"
-          
+
       - name: Increment version on main
         id: increment_version
         run: |
@@ -71,3 +71,5 @@ jobs:
 
       - name: Publish
         run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
