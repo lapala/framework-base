@@ -15,9 +15,6 @@ jobs:
 
     if: github.event.pull_request.merged
 
-    permissions:
-      id-token: write
-
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
@@ -72,4 +69,4 @@ jobs:
       - name: Publish
         run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.TECH_NPM_TOKEN }}
